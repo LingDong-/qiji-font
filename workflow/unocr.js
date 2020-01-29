@@ -72,8 +72,8 @@ function displayRects(){
 		var jmp = document.createElement("button");
 		jmp.innerHTML = i;
 		jmp.style.position = "fixed";
-		jmp.style.top = ((i%70)*15)+"px";
-		jmp.style.left = (Math.floor(i/70)*20)+"px";
+		jmp.style.top = ((i%64)*15)+"px";
+		jmp.style.left = (Math.floor(i/64)*20)+"px";
 		jmp.style.width="20px"
 		jmp.style.textAlign="left";
 		jmp.style.padding="0px";
@@ -125,31 +125,61 @@ function displayRects(){
 	atn.style.zIndex = "10000"
 
 
-	function download(filename, text) {
-	  var element = document.createElement('a');
-	  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-	  element.setAttribute('download', filename);
-
-	  element.style.display = 'none';
-	  document.body.appendChild(element);
-
-	  element.click();
-
-	  document.body.removeChild(element);
-	}
-
 	var dtn = document.createElement("button");
 	dtn.innerHTML = "Download text";
 	dtn.style.position = "fixed";
 	dtn.style.top = "0px";
-	dtn.style.left = "900px";
+	dtn.style.left = "800px";
 	document.body.appendChild(dtn);
 	dtn.onclick = function(){
 		download("unocr-"+(new Date()).toString()+".txt",ta.value);
 	}
-	atn.style.zIndex = "10000"
+	dtn.style.zIndex = "10000"
+
+	var etn = document.createElement("button");
+	etn.innerHTML = "Download map";
+	etn.style.position = "fixed";
+	etn.style.top = "0px";
+	etn.style.left = "900px";
+	document.body.appendChild(etn);
+	etn.onclick = function(){
+		var s = computeMap()
+		console.log(s)
+		saveData(s,"label-"+(new Date()).toString()+".txt");
+	}
+	etn.style.zIndex = "10000"
 
 	console.log(ranges);
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function computeMap(){
+	var cnt = 0;
+	var s = ""
+	for (var i = 0; i < rects.length; i++){
+		if (!rects[i]){
+			continue
+		}
+		for (var j = 0; j < rects[i].length; j++){
+			var name = `-H${i}-${rects[i][j].join("_")}.png`
+			var val = rectdivs[cnt].innerHTML;
+			s += name+"\t"+val+"\n"
+			cnt ++;
+		}
+	}
+	return s;
 }
 
 
@@ -165,7 +195,17 @@ function updateLabels(i0,i1){
 	}
 	var cnt = 0;
 	for (var i = 0; i < txt.length; i++){
-		if (txt[i] == "\n"){
+		if (txt[i] == "\n" || txt[i] == " "){
+			continue;
+		}
+		if (txt[i] == "$"){
+			var n = Math.ceil(cnt/20)*20-cnt;
+			for (var j = 0; j < n; j++){
+				if (i0 <= cnt && cnt < i1){
+					rectdivs[cnt].innerHTML = "X";
+				}
+				cnt++;
+			}
 			continue;
 		}
 		if (txt[i] == "S"){
@@ -234,13 +274,31 @@ body{
 	var ta = document.getElementById("ta")
 	ta.innerText=txt;
 
+
+	var saveData = (function () {
+	    var a = document.createElement("a");
+	    document.body.appendChild(a);
+	    a.style = "display: none";
+	    return function (data, fileName) {
+	        var json = data,
+	            blob = new Blob([json], {type: "octet/stream"}),
+	            url = window.URL.createObjectURL(blob);
+	        a.href = url;
+	        a.download = fileName;
+	        a.click();
+	        window.URL.revokeObjectURL(url);
+	    };
+	}());
+
 	var rectdivs = []
 	var imgfiles = ${JSON.stringify(imgfiles)};
 	var rects=${JSON.stringify(rects)};
 	
+	var download = ${download.toString()}
 	var displayImages = ${displayImages.toString()};
 	var displayRects = ${displayRects.toString()};
 	var updateLabels = ${updateLabels.toString()};
+	var computeMap = ${computeMap.toString()}
 	var ranges = []
 	displayImages();
 	displayRects();
