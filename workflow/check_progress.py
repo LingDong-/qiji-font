@@ -14,7 +14,7 @@ def uni(s):
 
 
 ocr_ret = [y.split("\t") for y in ("\n".join([open(x,'r').read() for x in glob("../tmp/ocr_ret*.txt")])).split("\n") if len(y)]
-hnz = list(set(open('../data/txt/淮南子.txt','r').read()))
+hnz = list(set(open('../data/labels_hnz_raw.txt','r').read()))
 
 
 tc2sc = json.loads(open("../data/TC2SC.json",'r').read())
@@ -34,13 +34,20 @@ print(add,len(add))
 
 print(addhnz,len(addhnz))
 
-unionhnz = hnz+old
+unionhnz = addhnz+old
 
 
 corp = "".join([open(x,'r').read() for x in glob("../../wenyan-book/*.md")])
 scorp = "".join(sorted(list(set([x for x in list(corp) if 0x4e00 < ord(x) < 0x9fff]))))
 
-lack = [x for x in scorp if x not in unionhnz]
+chuci = list(set(open("../../../Downloads/chuci.txt",'r').read()))
+
+common = set(open("../data/common4808.txt",'r').read())
+
+lack = [x for x in scorp if x not in unionhnz and x in chuci]
 print(lack,len(lack))
 
 print(len(unionhnz))
+
+lackc = [x for x in common if x not in unionhnz and x in chuci]
+print(lackc,len(lackc))

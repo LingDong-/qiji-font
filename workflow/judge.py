@@ -4,14 +4,14 @@ cv = cv2
 import json
 
 
-known_problem = ["/Users/admin/proj/qiji-font/coarse/"+x for x in open("../data/ocr_crashers.txt",'r').read().split("\n")]
+# known_problem = ["/Users/admin/proj/qiji-font/coarse/"+x for x in open("../data/ocr_crashers.txt",'r').read().split("\n")]
 
-goodone = [x.split("\t") for x in open("tmp/labels.txt",'r').read().split("\n")]
-misdone = [x.split("\t") for x in open("tmp/mislabels.txt",'r').read().split("\n")]
+goodone = [x.split("\t") for x in open("../tmp/labels.txt",'r').read().split("\n")]
+misdone = [x.split("\t") for x in open("../tmp/mislabels.txt",'r').read().split("\n")]
 
 mislabel = misdone
 goodlabel = goodone
-nolabel = known_problem
+nolabel = []#known_problem
 
 tc2sc = json.loads(open("../data/TC2SC.json",'r').read())
 sc2tc = {}
@@ -21,7 +21,11 @@ for k in tc2sc:
 	# sc2tc[tc2sc[k]].append(k)
 	sc2tc[tc2sc[k]]=k
 
-files = [x.replace("\t\t","\t").split("\t") for x in open("../tmp/ocr_ret.txt",'r').read().split("\n") if len(x)]
+files = [x.replace("\t\t","\t").split("\t") for x in open("../data/labels_hnz_raw.txt",'r').read().split("\n") if len(x)]
+files = [["../output/coarse/"+x[0],x[1]] for x in files]
+
+done = [x.split("\t")[1] for x in open("../data/labels_lh.txt",'r').read().split("\n") if len(x)]
+
 for f in files:
 	if len(f) != 2:
 		print(f)
@@ -29,13 +33,16 @@ for f in files:
 
 collect = {}
 for f,xs in files:
-	xs = [x for x in list(xs) if 0x4e00 < ord(x) < 0x9fff]
+	# xs = [x for x in list(xs) if 0x4e00 < ord(x) < 0x9fff]
 	if (len(xs) == 0):
 		nolabel.append(f)
 	for x in xs:
-		if x not in collect:
-			collect[x] = []
-		collect[x].append(f)
+		if x not in done:
+			if x not in collect:
+				collect[x] = []
+			collect[x].append(f)
+
+print(collect.keys(),len(collect.keys()))
 
 open("../tmp/nolabels.txt",'w').write("\n".join(nolabel))
 
@@ -62,10 +69,15 @@ for c in collect:
 	if is_done:
 		print("done",c)
 		continue
+	imgs = []
 	for x in collect[c]:
 		if cv.imread(x) is None:
-			print("no img",x)
-	im = np.hstack([cv.imread(i) for i in collect[c]])
+			print("no img",c,x)
+		else:
+			imgs.append(x)
+	if not len(imgs):
+		continue
+	im = np.hstack([cv.imread(i) for i in imgs[0:50]])
 	c0 = c
 	c2 = c
 	if c in sc2tc:
