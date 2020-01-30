@@ -10,16 +10,28 @@ def f2t(f):
 # files = glob("pages/李长吉歌诗.4卷.外诗集1卷.李贺撰.刘辰翁评.明末凌濛初刊闵氏朱墨套印本 11.png")
 
 files = glob("../pages/* H*.png")
+files = glob("../pages/* H230.png")
+
+done = glob("../output/coarse/*.png")
 
 def show(x):
     cv2.imshow('',x);cv2.waitKey(0)
 
 for f in files:
+    
     print(f)
     rects = [[int(y) for y in x.split("\t")] for x in open(f2t(f),'r').read().split("\n") if len(x)]
     im = cv2.imread(f);
     for r in rects:
         if (not r[2]) or (not r[3]):
+            continue
+        # if not (4500<r[0]<5000 and 1500 < r[1] < 2000):
+            # continue
+        # print(r)
+
+        oname = "-"+f2t(f).split("/")[-1].split(".")[0]+"-"+"_".join([str(x) for x in r])+".png"
+
+        if oname in done:
             continue
 
         c3 = im[int(r[1]-r[3]*0.1):int(r[1]+r[3]*1.2),int(r[0]-r[2]*0.1):int(r[0]+r[2]*1.2)].astype(np.float32)/255
@@ -49,6 +61,7 @@ for f in files:
         mask = []
 
         def rectok(r):
+            # return True
             if (r[0] < 5):
                 return False
             if (r[1] < 5):
@@ -153,5 +166,5 @@ for f in files:
         # show(thd)
         # show(drawing)
 
-        cv2.imwrite("../tmp/dbg/-"+f2t(f).split("/")[-1].split(".")[0]+"-"+"_".join([str(x) for x in r])+".png",drawing)
-        cv2.imwrite("../output/coarse/-"+f2t(f).split("/")[-1].split(".")[0]+"-"+"_".join([str(x) for x in r])+".png",ren)
+        cv2.imwrite("../tmp/dbg/"+oname,drawing)
+        cv2.imwrite("../output/coarse/"+oname,ren)

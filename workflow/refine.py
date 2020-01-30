@@ -9,13 +9,14 @@ def f2t(f):
 
 # files = glob("pages/李长吉歌诗.4卷.外诗集1卷.李贺撰.刘辰翁评.明末凌濛初刊闵氏朱墨套印本 11.png")
 
-files = glob("../data/pages/*.png")
+files = glob("../pages/* H*.png")
 
 
 def show(x):
     cv2.imshow('',x);cv2.waitKey(0)
 
-care = [x.split("\t")[0].split("/")[-1].split(".")[0] for x in open("../data/labels.txt",'r').read().split("\n") if len(x)][2498:]
+care = [x.split("\t")[0].split("/")[-1].split(".")[0] for x in open("../data/labels_hnz.txt",'r').read().split("\n") if len(x)]
+
 print(len(care))
 for f in files:
     print(f)
@@ -230,5 +231,5 @@ for f in files:
 
         # cv2.imshow('',crpd)
         fnl = ((1-trrd*(1-crpd.astype(np.float32)/255))*255).astype(np.uint8)
-
+        # cv2.imshow('',fnl);cv2.waitKey(0)
         cv2.imwrite("../output/fine/"+bname+".bmp",fnl)
