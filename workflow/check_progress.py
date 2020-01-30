@@ -41,6 +41,6 @@ corp = "".join([open(x,'r').read() for x in glob("../../wenyan-book/*.md")])
 scorp = "".join(sorted(list(set([x for x in list(corp) if 0x4e00 < ord(x) < 0x9fff]))))
 
 lack = [x for x in scorp if x not in unionhnz]
-print(lack)
+print(lack,len(lack))
 
 print(len(unionhnz))
