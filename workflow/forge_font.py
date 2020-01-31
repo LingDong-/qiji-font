@@ -69,6 +69,12 @@ for pth in care:
             pass
             print(o,"has own glyph")
 
+glyph = font.createChar(0x3001)
+glyph.importOutlines("../output/singles/、f.svg")
+glyph.width=800
+glyph = font.createChar(0x3002)
+glyph.importOutlines("../output/singles/。f.svg")
+glyph.width=800
 
 print(len(list(font.glyphs())))
 
