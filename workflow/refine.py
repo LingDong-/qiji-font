@@ -9,15 +9,32 @@ def f2t(f):
 
 # files = glob("pages/李长吉歌诗.4卷.外诗集1卷.李贺撰.刘辰翁评.明末凌濛初刊闵氏朱墨套印本 11.png")
 
-files = glob("../pages/* H*.png")
+files = glob("../pages/*.png")
+
+
+bigger = [[x.split("\t")[0],len(x.split("\t")[1]) * (1 if x.split("\t")[1][0]=="x" else -1)] for x in open("../data/bigger.txt",'r').read().split("\n") if len(x)]
 
 
 def show(x):
     cv2.imshow('',x);cv2.waitKey(0)
 
-care = [x.split("\t")[0].split("/")[-1].split(".")[0] for x in open("../data/labels_hnz.txt",'r').read().split("\n") if len(x)]
+carekv = [[x.split("\t")[0].split("/")[-1].split(".")[0],x.split("\t")[1]] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)]
+bigk = []
+for k,v in carekv:
+    for b,c in bigger:
+        if v == b:
+            bigk.append([k,c])
+            break;
 
-print(len(care))
+
+care = [x.split("\t")[0].split("/")[-1].split(".")[0] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)]
+manshft = [x.split("\t") for x in open("../data/manual_shift.txt").read().split("\n")]
+# care = [x for x in care if x in [y[0] for y in manshft]]
+care = [x for x in care if x in [y[0] for y in bigk]]
+# care = [x for x in care if ("H" in x)]
+
+print(care,len(care))
+
 for f in files:
     print(f)
     rects = [[int(y) for y in x.split("\t")] for x in open(f2t(f),'r').read().split("\n") if len(x)]
@@ -28,9 +45,24 @@ for f in files:
             continue
 
         bname = "-"+f2t(f).split("/")[-1].split(".")[0]+"-"+"_".join([str(x) for x in r])
-
+        # 
         if (bname not in care):
             continue
+        # print(bname)
+        ignb = False
+
+        for m in manshft:
+            if m[0] == bname:
+                r[0]+=int(m[1])
+                r[1]+=int(m[2])
+                r[2]+=int(m[3])
+                r[3]+=int(m[4])
+                print(m)
+
+                
+                if len(m)>5:
+                    ignb = True
+                break
 
         if im is None:
             im = cv2.imread(f)
@@ -72,6 +104,8 @@ for f in files:
         mask = []
 
         def rectok(r):
+            if (ignb):
+                return True
             if (r[0] < 5):
                 return False
             if (r[1] < 5):
@@ -138,12 +172,19 @@ for f in files:
             for j in range(len(ncnt[i])):
                 pts.append(ncnt[i][j])
         if (len(pts) == 0):
+            print('death')
+            exit()
             continue
         bd = cv.boundingRect(np.array(pts))
   
         px,py = 0,0
         s = 1
-        ss = 1.05
+        ss = 1.1 if "H" in bname else 1.05
+        for b in bigk:
+            if b[0] == bname:
+                ss += 0.1*b[1]
+                break
+                print("big!",b,ss)
         if bd[2]>bd[3]:
             
             s = ss/(th.shape[1])
@@ -218,8 +259,8 @@ for f in files:
         # cv2.imwrite("xrend/"+bname+".png",255*(1-trr))
 
         cp = cv2.copyMakeBorder(c0,100,100,100,100,cv2.BORDER_CONSTANT,value=255)
-        # print(s)
-        nbd = [int(1/1*(bd[0]-px+100)-hshft/(s*W)*ss),int(1/1*(bd[1]-py+100)-vshft/(s*W)*ss),int(1/ss*(bd[2]+px*2)),int(1/ss*(bd[3]+py*2))];
+        # print(s,ss)
+        nbd = [int(1/1*(bd[0]-px+100)-hshft/(s*W)),int(1/1*(bd[1]-py+100)-vshft/(s*W)),int(1/ss*(bd[2]+px*2)),int(1/ss*(bd[3]+py*2))];
         # print(px,py,nbd)
         crp = cp[nbd[1]:nbd[1]+nbd[3],nbd[0]:nbd[0]+nbd[2]]
         crp = cv.resize(crp,(trr.shape[0],trr.shape[1]),cv2.INTER_AREA)
@@ -229,7 +270,10 @@ for f in files:
 
         crpd = cv2.adaptiveThreshold(crpd,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,151,15)
 
-        # cv2.imshow('',crpd)
+        
         fnl = ((1-trrd*(1-crpd.astype(np.float32)/255))*255).astype(np.uint8)
+
+        # cv2.imshow('',(1-trrd)+0.5*(1-fnl.astype(np.float32)/255));cv2.waitKey(0)
+
         # cv2.imshow('',fnl);cv2.waitKey(0)
         cv2.imwrite("../output/fine/"+bname+".bmp",fnl)

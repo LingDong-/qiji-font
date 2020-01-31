@@ -22,11 +22,16 @@ font.familyname = "QIJI"
 
 care = {x.split("\t")[0].split("/")[-1].split(".")[0]:x.split("\t")[1] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)}
 
-print(care)
-for f in glob("../output/stage/*.svg"):
-    if f.split("/")[-1].split(".")[0] not in care:
-        continue
-    char = care[f.split("/")[-1].split(".")[0]]
+# print(care)
+# for f in glob("../output/stage/*.svg"):
+for pth in care:
+
+    char = care[pth]
+    # if f.split("/")[-1].split(".")[0] not in care:
+        # exit()
+        # continue
+    # char = care[f.split("/")[-1].split(".")[0]]
+    f = "../output/stage/"+pth+".svg"
 
     other = set()
     for o in odd:
@@ -41,11 +46,16 @@ for f in glob("../output/stage/*.svg"):
         elif o[1] == char:
             other.add(o[0])
             
-    print(char,list(other))
+    
     hx = ord(char)
-    print(hx,char)
+    print(hx,char,list(other))
     glyph = font.createChar(hx)
-    glyph.importOutlines(f) 
+    try:
+        glyph.importOutlines(f)
+    except:
+        print("lack",f) 
+        exit()
+        continue
     glyph.width=800
 
     for o in other:
@@ -56,9 +66,14 @@ for f in glob("../output/stage/*.svg"):
             glyph.width=800
             print(o,"copied")
         else:
+            pass
             print(o,"has own glyph")
 
 
 print(len(list(font.glyphs())))
 
 font.generate("../qiji.ttf")
+
+
+
+
