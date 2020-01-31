@@ -26,7 +26,7 @@ elbl = [x for x in nlbl+rlbl if x[1] not in [y[1] for y in olbl]]
 # print(elbl,len(elbl))
 
 
-open("../data/labels_hnz.txt",'w').write("\n".join([x[0]+"\t"+x[1] for x in elbl]))
+open("../data/labels_hnz.txt",'w').write(("\n".join([x[0]+"\t"+x[1] for x in elbl])).replace("../output/coarse/",""))
 
 ks = set([x[1] for x in olbl]+[x[1] for x in nlbl]+[x[1] for x in rlbl])
 vs = olbl+nlbl+rlbl
@@ -38,7 +38,9 @@ for k in ks:
 	flbl.append(v)
 # print(flbl,len(flbl))
 
-open("../data/labels_all.txt",'w').write("\n".join([x[0]+"\t"+x[1] for x in flbl]))
+s = "\n".join([x[0]+"\t"+x[1] for x in flbl])
+s = s.replace("../output/coarse/","")
+open("../data/labels_all.txt",'w').write(s)
 
 # import cv2
 # cv = cv2

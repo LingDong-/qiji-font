@@ -11,3 +11,6 @@ for f in glob("../output/fine/*.svg"):
 		'width="100" height="100" viewBox')
 	# s = re.sub(r"(\d+?)([ \nz])",r"0.\1\2",s)
 	open(f.replace("fine","stage"),'w').write(s)
+
+
+print("staged")
