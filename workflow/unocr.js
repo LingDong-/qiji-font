@@ -3,7 +3,7 @@ const fs = require('fs')
 var rectfiles = fs.readdirSync("../data/rects").filter(x=>x.endsWith(".tsv")).map(x=>"../data/rects/"+x)
 var rects = []
 var imgfiles = []
-var txt = fs.readFileSync("../data/txt/淮南子.txt").toString().replace(/[^\u3e00-\u9fff]/g,"");
+var txt = fs.readFileSync("../data/hnz_matched.txt").toString().replace(/[^\u3e00-\u9fff]/g,"");
 
 
 for (var i = 0; i < rectfiles.length; i++){

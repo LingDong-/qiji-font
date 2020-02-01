@@ -11,7 +11,8 @@
 - Using semi-automatic computer vision and OCR;
 - Open source;
 - A work in progress;
-- Named in honour of 閔齊伋, 16th century printer.
+- Named in honour of 閔齊伋, 16th century printer;
+- Intended to be used with [wenyan-lang](wy-lang.org), the Classical Chinese programming language.
 
 ![](screenshots/banner.svg)
 
