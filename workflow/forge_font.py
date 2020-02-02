@@ -17,7 +17,8 @@ simp = [[x,simp[x]] for x in simp]
 
 font = fontforge.font()
 font.familyname = "QIJI"
-
+font.fontname = "QIJI"
+font.fullname= "QIJI"
 
 
 care = {x.split("\t")[0].split("/")[-1].split(".")[0]:x.split("\t")[1] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)}

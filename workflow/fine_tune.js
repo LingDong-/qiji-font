@@ -6,13 +6,13 @@ for (var i = 0; i < stage.length; i++){
 }
 var xforms_str = "{}";
 try{
-	xforms_str = fs.readFileSync("../data/svg-tweak.json").toString()
+	xforms_str = fs.readFileSync("../data/svg_tweak.json").toString()
 }catch(e){
 
 }
 function make_page(){
 	var W = 64;
-	var NPR= 18;
+	var NPR= 100;
 	var glyph_keys = Object.keys(glyphs);
 	var s = "";
 	for (var i = 0; i < glyph_keys.length; i++){
@@ -72,6 +72,7 @@ function make_page(){
 		// console.log(gstr)
 		document.getElementById(glyph_hl).innerHTML = gstr+svgin+"</g>";
 	}
+	var rule_hidden = false;
 	document.body.onkeypress = function(e){
 		if (e.code=="KeyA"){
 			update_xform((t)=>{t.x-=1})
@@ -93,6 +94,9 @@ function make_page(){
 			update_xform((t)=>{t.rotate=0;t.x=0;t.y=0;t.scale=1})
 		}else if (e.code=="KeyF"){
 			saveData(JSON.stringify(xforms),"svg-tweak-"+(new Date()).getTime().toString()+".json")
+		}else if (e.code=="KeyH"){
+			rule_hidden = !rule_hidden
+			document.getElementById("rule").style.opacity=rule_hidden?"0":"1"
 		}
 	}
 
