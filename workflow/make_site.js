@@ -64,6 +64,8 @@ function main(){
 }
 
 var html = `
+<!-- GENERATED FILE DO NOT EDIT -->
+<!-- CHANGE THIS LINE TO TRIGGER REBUILD # -->
 <head>
   <meta charset="UTF-8">
 </head>
