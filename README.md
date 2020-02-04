@@ -15,7 +15,7 @@
 - Intended to be used with [wenyan-lang](wy-lang.org), the Classical Chinese programming language.
 
 ![](screenshots/banner.svg)
-
+![](screenshots/screenshot002.png)
 ## Download
 
 - True type font: [QIJI.ttf](QIJI.ttf)

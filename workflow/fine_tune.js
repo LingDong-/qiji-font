@@ -12,17 +12,37 @@ try{
 }
 function make_page(){
 	var W = 64;
-	var NPR= 100;
+	var NPR= 10;
 	var glyph_keys = Object.keys(glyphs);
 	var s = "";
+
+	// glyph_keys = glyph_keys.filter(x=>{
+	// 	if (! (x in xforms)){
+	// 		return true;
+	// 	}
+	// 	if (xforms[x].x == 0 && xforms[x].y == 0 && xforms[x].rotate == 0 && xforms[x].scale == 1){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// })
 	for (var i = 0; i < glyph_keys.length; i++){
 		var k = glyph_keys[i]
 		s+=glyphs[k].replace(/<svg/,`<svg id="${k}"`).replace(/width="100"/,`width="${W}"`).replace(/height="100"/,`height="${W}"`);
-		xforms[k] = {x:0,y:0,rotate:0,scale:1}
+		if (!xforms[k]){
+			xforms[k] = {x:0,y:0,rotate:0,scale:1}
+		}
 	}
 	var maindiv = document.getElementById("main");
 	maindiv.innerHTML=s;
 
+	var glyph_hl;
+	for (var i = 0; i < glyph_keys.length; i++){
+		glyph_hl = glyph_keys[i]
+		update_xform(()=>0);
+		if (i % 100 == 0){
+			console.log(i,"/",glyph_keys.length);	
+		}
+	}
 	
 	var rh = W*Math.ceil(glyph_keys.length/NPR)*0.8;
 	var rule = `<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="${W*1.2*NPR}" height="${rh}" style="position:absolute;left:0px;top:0px;">`
@@ -48,7 +68,6 @@ function make_page(){
 		rule += `<line x1="${i*W*1.2+W*0.2}" y1="${0}" x2="${i*W*1.2+W*0.2}" y2="${rh}" fill="none" stroke="rgba(255,0,0,0.5)"></line>`
 		rule += `<line x1="${i*W*1.2+W*0.8}" y1="${0}" x2="${i*W*1.2+W*0.8}" y2="${rh}" fill="none" stroke="rgba(255,0,0,0.5)"></line>`
 	}
-	var glyph_hl = glyph_keys[0];
 
 	rule += "</svg>"
 	document.getElementById("rule").innerHTML+=rule
