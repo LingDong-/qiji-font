@@ -311,7 +311,9 @@ var main = function main(){
 
 	function update_ta(){
 		document.getElementById("ta").innerHTML = lorem[document.getElementById("sel-txt").value];
-		update_r()
+		if (document.fonts.check('1em qiji')){
+			update_r()
+		}
 	}
 	function update_fs(){
 		update_r();
@@ -336,6 +338,16 @@ var main = function main(){
 	document.getElementById("sel-fs").value = "small"
 	update_ta()
 	update_fs()
+		
+	function waitFont(){
+		if (document.fonts.check('1em qiji')){
+			update_r()
+		}else{
+			document.getElementById("render").innerHTML = "字體加載中"
+			setTimeout(waitFont,10)
+		}
+	}
+	waitFont();
 	document.getElementById("sel-txt").onchange = update_ta;
 	document.getElementById("sel-fs").onchange = update_fs;
 	document.getElementById("sel-bg").onchange = function(){document.getElementById("render").style.background=document.getElementById("sel-bg").value}

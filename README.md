@@ -14,8 +14,10 @@
 - Named in honour of 閔齊伋, 16th century printer;
 - Intended to be used with [wenyan-lang](wy-lang.org), the Classical Chinese programming language.
 
-![](screenshots/banner.svg)
-![](screenshots/screenshot002.png)
+
+## [Try it out online!](https://qiji-font.netlify.com/)
+[![](screenshots/screenshot002.png)](https://qiji-font.netlify.com/)
+
 ## Download
 
 - True type font: [QIJI.ttf](QIJI.ttf)
