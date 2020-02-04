@@ -1,8 +1,15 @@
 const fs = require('fs')
-var stage = fs.readdirSync("../output/stage").filter(x=>x.endsWith(".svg"))
+// var stage = fs.readdirSync("../output/stage").filter(x=>x.endsWith(".svg"))
+
+var glyph_keys = fs.readFileSync("../data/labels_all.txt").toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[0].replace(".png",".svg"))
+
 var glyphs = {}
-for (var i = 0; i < stage.length; i++){
-	glyphs[stage[i]]=fs.readFileSync("../output/stage/"+stage[i]).toString()
+// for (var i = 0; i < stage.length; i++){
+// 	glyphs[stage[i]]=fs.readFileSync("../output/stage/"+stage[i]).toString()
+// }
+for (var i = 0; i < glyph_keys.length; i++){
+	glyphs[glyph_keys[i]]=fs.readFileSync("../output/fine/"+glyph_keys[i]).toString()
+	.replace('width="512.000000pt" height="512.000000pt" viewBox','width="100" height="100" viewBox')
 }
 var xforms_str = "{}";
 try{
@@ -153,4 +160,4 @@ make_page();
 </script>
 </body>
 `
-fs.writeFileSync("../tmp/fine_tweak.html",html)
+fs.writeFileSync("../tmp/fine_tune.html",html)

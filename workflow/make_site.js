@@ -6,12 +6,16 @@ for (var i = 0; i < lorem.length; i++){
 	lorem_kv[k] = lorem[i]
 }
 var charset = fs.readFileSync("../data/labels_all.txt").toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[1])
+lorem_kv["CHARSET"] = charset.concat().sort().join("")
+
 var charvar = fs.readFileSync("../data/variant_map.txt").toString().replace(/\n/g,'\t').split("\t")
 charset = Array.from(new Set(charset.concat(charvar)))
 
 var charsmp = Object.entries(JSON.parse(fs.readFileSync("../data/TC2SC.json").toString())).filter(x=>charset.includes(x[0])).map(x=>x[1])
 charset = Array.from(new Set(charset.concat(charsmp)))
+
 charset.push("。","、")
+
 
 function main(){
 	var isStupidSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
