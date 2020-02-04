@@ -79,6 +79,6 @@ The main code is contained in `/workflow`, and corresponds to the steps describe
 
 # Charset
 
-Sheet of all unique glyphs sorted by unicode entry point, click to enlarge. (this is lossy JPEG, for full PNG, [check here](screeenshots/sheet.png), for SVG, run `node workflow/make_sheet.js`)
+Sheet of all unique glyphs sorted by unicode entry point, click to enlarge. (this is lossy JPEG, for full PNG, [check here](screenshots/sheet.png), for SVG, run `node workflow/make_sheet.js`)
 
 ![](screenshots/sheet.jpg)
