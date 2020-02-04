@@ -77,6 +77,8 @@
 
 The main code is contained in `/workflow`, and corresponds to the steps described above. Documentation for the code is yet to be done (soon), so feel free to inquire if interested. As you might have noticed, there is a ton of work involved in making a Chinese font, so contribution is very much welcome :)
 
+# Charset
 
+Sheet of all unique glyphs sorted by unicode entry point, click to enlarge. (this is lossy JPEG, for full PNG, [check here](screeenshots/sheet.png), for SVG, run `node workflow/make_sheet.js`)
 
-
+![](screenshots/sheet.jpg)
