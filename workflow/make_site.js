@@ -82,6 +82,7 @@ var html = `
 		line-height: 200px;
 		/*X*/letter-spacing: -50px;
 		font-weight: normal;
+		font-display: block;
 	}
 	.text-big{
 		color: rgba(0,0,0,0.8);
@@ -91,6 +92,7 @@ var html = `
 		line-height: 80px;
 		/*X*/letter-spacing: -14px;
 		font-weight: normal;
+		font-display: block;
 	}
 	.text-medium{
 		color: rgba(0,0,0,0.8);
@@ -100,6 +102,7 @@ var html = `
 		line-height: 64px;
 		/*X*/letter-spacing: -12px;
 		font-weight: normal;
+		font-display: block;
 	}
 	.text-small{
 		color: rgba(0,0,0,0.8);
@@ -109,6 +112,7 @@ var html = `
 		line-height: 32px;
 		/*X*/letter-spacing: -5px;
 		font-weight: normal;
+		font-display: block;
 	}
 	.punc-huge{
 		display: inline-block;
@@ -141,7 +145,8 @@ var html = `
 		background: ANTIQUEWHITE;
 		box-shadow:
         inset 0px 11px 8px -10px rgba(0,0,0,0.1),
-        inset 0px -11px 8px -10px rgba(0,0,0,0.1); 
+        inset 0px -11px 8px -10px rgba(0,0,0,0.1);
+        font-display: block;
 	}
 </style>
 
