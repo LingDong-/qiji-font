@@ -17,6 +17,28 @@ charset = Array.from(new Set(charset.concat(charsmp)))
 charset.push("。","、")
 
 function main(){
+	let fontready = false
+
+	WebFont.load({
+    custom: {
+      families: ['QIJI']
+		},
+		timeout: 1000 * 60 * 5, // 5min 
+		loading (){
+			console.log('FONT LOADING')
+		},
+		active() {
+			fontready = true
+			update_r()
+			console.log('FONT ACTIVE')
+		},
+		inactive() {
+			fontready = false
+			console.log('FONT INACTIVE')
+			alert('Failed to load font')
+		}
+	});
+	
 	var isStupidSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 	if (isStupidSafari){
 		var st = document.getElementById("style").innerHTML
@@ -32,14 +54,15 @@ function main(){
 
 	function update_ta(){
 		document.getElementById("ta").innerHTML = lorem[document.getElementById("sel-txt").value];
-		if (document.fonts.check('1em qiji')){
-			update_r()
-		}
+		update_r();
 	}
 	function update_fs(){
 		update_r();
 	}
 	function update_r(){
+		if (!fontready)
+			return
+
 		var t = document.getElementById("ta").value;
 		var tc = "";
 		for (var k of t){
@@ -60,22 +83,6 @@ function main(){
 	update_ta()
 	update_fs()
 	
-	if (isStupidSafari){
-		document.getElementById("render").innerHTML = "字體加載中"
-		document.fonts.ready.then(function() {
-		    update_r()
-		});
-	}else{
-		function waitFont(){
-			if (document.fonts.check('1em qiji')){
-				update_r()
-			}else{
-				document.getElementById("render").innerHTML = "字體加載中"
-				setTimeout(waitFont,10)
-			}
-		}
-		waitFont();
-	}
 	document.getElementById("sel-txt").onchange = update_ta;
 	document.getElementById("sel-fs").onchange = update_fs;
 	document.getElementById("sel-bg").onchange = function(){document.getElementById("render").style.background=document.getElementById("sel-bg").value}
@@ -88,10 +95,12 @@ var html = `
 <!-- CHANGE THIS LINE TO TRIGGER REBUILD # -->
 <head>
 	<meta charset="UTF-8">
+	<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js"></script>
 </head>
 <style id="style">
 	@font-face {
-	  font-family: QIJI;
+		font-family: QIJI;
+		font-display: swap;
 	  src: url("qiji.ttf") format('truetype');
 	}
 	.text-huge{
@@ -185,12 +194,13 @@ var html = `
 </textarea>
 </div>
 <div id="render" style="position:absolute; top: 180px; left: 0px; width: calc(100% - 50px); height: 665px; padding: 25px;">
+字體加載中
 </div>
 <div style="position:absolute;top:910px; right:30px; font-family: monospace">
 Open source font by Lingdong Huang 2020, <a href="https://github.com/LingDong-/qiji-font">Download on GitHub</a>.
 </div>
 <script>
-var charset = ${JSON.stringify(charset)}
+var charset = ${JSON.stringify(charset.join(''))}
 var lorem = ${JSON.stringify(lorem_kv)};
 var main = ${main.toString()}
 main()
