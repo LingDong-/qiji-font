@@ -1,11 +1,11 @@
 const fs = require('fs')
-var lorem = fs.readFileSync("../data/lorem.txt").toString().split("\n\n")
+var lorem = fs.readFileSync("../data/lorem.txt").toString().split(/\n\n|\s\n\s\n/g)
 var lorem_kv = {}
 for (var i = 0; i < lorem.length; i++){
 	var k = lorem[i].replace(/。/g,'').slice(0,7)
 	lorem_kv[k] = lorem[i]
 }
-var charset = fs.readFileSync("../data/labels_all.txt").toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[1])
+var charset = fs.readFileSync("../data/labels_all.txt").toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[1].trim())
 lorem_kv["CHARSET"] = charset.concat().sort().join("")
 
 var charvar = fs.readFileSync("../data/variant_map.txt").toString().replace(/\n/g,'\t').split("\t")
@@ -15,7 +15,6 @@ var charsmp = Object.entries(JSON.parse(fs.readFileSync("../data/TC2SC.json").to
 charset = Array.from(new Set(charset.concat(charsmp)))
 
 charset.push("。","、")
-
 
 function main(){
 	var isStupidSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
@@ -82,15 +81,13 @@ function main(){
 	document.getElementById("sel-bg").onchange = function(){document.getElementById("render").style.background=document.getElementById("sel-bg").value}
 	document.getElementById("ta").onkeypress=document.getElementById("ta").onchange=update_r
 	document.getElementById("btn-render").onclick = update_r;
-
-
 }
 
 var html = `
 <!-- GENERATED FILE DO NOT EDIT -->
 <!-- CHANGE THIS LINE TO TRIGGER REBUILD # -->
 <head>
-  <meta charset="UTF-8">
+	<meta charset="UTF-8">
 </head>
 <style id="style">
 	@font-face {
