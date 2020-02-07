@@ -88,6 +88,11 @@ function main(){
 	document.getElementById("sel-bg").onchange = function(){document.getElementById("render").style.background=document.getElementById("sel-bg").value}
 	document.getElementById("ta").onkeypress=document.getElementById("ta").onchange=update_r
 	document.getElementById("btn-render").onclick = update_r;
+
+	document.getElementById("render").addEventListener('wheel', (e)=> {
+		document.getElementById("render").scrollLeft -= e.deltaY;
+		e.preventDefault();
+	})
 }
 
 var html = `
@@ -149,6 +154,7 @@ var html = `
 		letter-spacing: -272px;
 		color:#BB705AEE;
 		overflow: visible;
+		z-index: 2;
 	}
 	.punc-big{
 		display: inline-block;
@@ -156,12 +162,14 @@ var html = `
 		letter-spacing: -68px;
 		color:#BB705AEE;
 		overflow: visible;
+		z-index: 2;
 	}
 	.punc-medium{
 		display: inline-block;
 		transform: translate(20px,-24px);
 		letter-spacing: -51px;
 		color:#BB705AEE;
+		z-index: 2;
 	}
 	.punc-small{
 		display: inline-block;
@@ -169,13 +177,15 @@ var html = `
 		letter-spacing: -30px;
 		color:#BB705AEE;
 		overflow: visible;
+		z-index: 2;
 	}
 	#render{
 		background: ANTIQUEWHITE;
 		box-shadow:
         inset 0px 11px 8px -10px rgba(0,0,0,0.1),
         inset 0px -11px 8px -10px rgba(0,0,0,0.1);
-        font-display: block;
+				font-display: block;
+		overflow-x: auto;
 	}
 </style>
 
