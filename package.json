@@ -4,7 +4,9 @@
   "private": true,
   "description": "齊伋體 Qiji font",
   "scripts": {
-    "build:site": "node ./workflow/make_site.js"
+    "build": "echo TODO!",
+    "build:site": "node ./workflow/make_site.js",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,26 @@
     "url": "https://github.com/LingDong-/qiji-font/issues"
   },
   "homepage": "https://github.com/LingDong-/qiji-font#readme",
+  "release-it": {
+    "github": {
+      "release": true,
+      "releaseName": "${version}",
+      "releaseNotes": "node ./scripts/releasenotes.js ${latestVersion} ${version}",
+      "assets": [
+        "dist/*.*"
+      ]
+    },
+    "npm": {
+      "publish": false
+    },
+    "hooks": {
+      "after:npm:bump": "npm run build",
+      "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    }
+  },
   "devDependencies": {
     "axios": "^0.19.2",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "release-it": "^12.4.3"
   }
 }
