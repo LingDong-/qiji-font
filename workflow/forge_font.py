@@ -6,20 +6,19 @@ from glob import glob
 import os
 import sys
 import json
-
-
 import fontforge
 
 odd = [x.split("\t") for x in open("../data/variant_map.txt",'r').read().split("\n") if len(x)]
 simp = json.loads(open("../data/TC2SC.json",'r').read())
 simp = [[x,simp[x]] for x in simp]
-
+version = json.loads(open("../package.json", "r").read())["version"]
 
 font = fontforge.font()
 font.familyname = "QIJI"
 font.fontname = "QIJI"
 font.fullname= "QIJI"
-font.copyright = "'Copyright (c) 2020, Lingdong Huang"
+font.copyright = "Copyright (c) 2020, Lingdong Huang"
+font.version = version
 
 
 care = {x.split("\t")[0].split("/")[-1].split(".")[0]:x.split("\t")[1] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)}
