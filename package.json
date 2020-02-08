@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "description": "齊伋體 Qiji font",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:site": "node ./workflow/make_site.js"
   },
   "repository": {
     "type": "git",
