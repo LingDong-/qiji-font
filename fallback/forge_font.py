@@ -26,7 +26,7 @@ for f in glob("../output/fallback_stage/*.svg"):
 
 print(len(list(font.glyphs())))
 
-font.generate("../qiji-fallback.ttf")
+font.generate("../dist/qiji-fallback.ttf")
 
 
 
