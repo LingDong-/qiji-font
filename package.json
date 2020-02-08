@@ -1,0 +1,24 @@
+{
+  "name": "qiji-font",
+  "version": "0.0.1",
+  "private": true,
+  "description": "齊伋體 Qiji font",
+  "scripts": {
+    "build:site": "node ./workflow/make_site.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LingDong-/qiji-font.git"
+  },
+  "keywords": [],
+  "author": "Lingdong Huang<lingdong0618@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LingDong-/qiji-font/issues"
+  },
+  "homepage": "https://github.com/LingDong-/qiji-font#readme",
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "fs-extra": "^8.1.0"
+  }
+}
