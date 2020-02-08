@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
+const axios = require('axios')
 
 // resolve relative path, usage r`../data`
 function r([filepath]) {
@@ -220,8 +221,18 @@ var main = ${main.toString()}
 main()
 </script>
 </body>
-`
+`;
 
-fs.ensureDir(r`../site`)
-fs.writeFileSync(r`../site/index.html`, html)
-fs.copyFileSync(r`../screenshots/qiji-seal.svg`, r`../site/seal.svg`)
+(async () => {
+	fs.ensureDir(r`../site`)
+	fs.writeFileSync(r`../site/index.html`, html)
+	fs.copyFileSync(r`../screenshots/qiji-seal.svg`, r`../site/seal.svg`)
+
+	if (!fs.existsSync(r`../site/qiji.ttf`)) {
+		console.log('Downloading font from release...')
+		const r = await axios.get('https://github.com/LingDong-/qiji-font/releases/latest/download/qiji.ttf')
+		fs.writeFileSync(r`../site/qiji.ttf`, r.body)
+	}
+
+	console.log('Build finished')
+})()

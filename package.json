@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/LingDong-/qiji-font#readme",
   "devDependencies": {
+    "axios": "^0.19.2",
     "fs-extra": "^8.1.0"
   }
 }
