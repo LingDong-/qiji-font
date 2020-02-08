@@ -80,7 +80,7 @@ glyph.width=800
 
 print(len(list(font.glyphs())))
 
-font.generate("../qiji.ttf")
+font.generate("../dist/qiji.ttf")
 
 
 
