@@ -1,17 +1,24 @@
-const fs = require('fs')
-var lorem = fs.readFileSync("../data/lorem.txt").toString().split(/\n\n|\s\n\s\n/g)
+const fs = require('fs-extra')
+const path = require('path')
+
+// resolve relative path, usage r`../data`
+function r([filepath]) {
+	return path.resolve(__dirname, filepath)
+}
+
+var lorem = fs.readFileSync(r`../data/lorem.txt`).toString().split(/\n\n|\s\n\s\n/g)
 var lorem_kv = {}
 for (var i = 0; i < lorem.length; i++){
 	var k = lorem[i].replace(/。/g,'').slice(0,7)
 	lorem_kv[k] = lorem[i]
 }
-var charset = fs.readFileSync("../data/labels_all.txt").toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[1].trim())
+var charset = fs.readFileSync(r`../data/labels_all.txt`).toString().split("\n").filter(x=>x.length).map(x=>x.split("\t")[1].trim())
 lorem_kv["CHARSET"] = charset.concat().sort().join("")
 
-var charvar = fs.readFileSync("../data/variant_map.txt").toString().replace(/\n/g,'\t').split("\t")
+var charvar = fs.readFileSync(r`../data/variant_map.txt`).toString().replace(/\n/g,'\t').split("\t")
 charset = Array.from(new Set(charset.concat(charvar)))
 
-var charsmp = Object.entries(JSON.parse(fs.readFileSync("../data/TC2SC.json").toString())).filter(x=>charset.includes(x[0])).map(x=>x[1])
+var charsmp = Object.entries(JSON.parse(fs.readFileSync(r`../data/TC2SC.json`).toString())).filter(x=>charset.includes(x[0])).map(x=>x[1])
 charset = Array.from(new Set(charset.concat(charsmp)))
 
 charset.push("。","、")
@@ -190,10 +197,7 @@ var html = `
 </style>
 
 <body>
-<div style="position:absolute; left:20px; top:22px">
-	${fs.readFileSync("../screenshots/qiji-seal.svg").toString()
-	.replace(/width="512.000000pt" height="512.000000pt" viewBox/g,`width="64" height="64" viewBox`)}
-</div>
+<img style="position:absolute; left:20px; top:22px" src="/seal.svg" width="60"/>
 <div style="position:absolute; left:100px; top:30px; min-width: 620px; width: calc(100% - 130px); height: 120px;  border:1px solid black; font-family:monospace">
 &nbsp;<b>QIJI-FONT(齊伋體) TESTBED</b>
 &nbsp;/&nbsp;TEXT=<select id="sel-txt">${Object.keys(lorem_kv).map(x=>'<option value="'+x+'"">'+x+"</option>")}</select>
@@ -218,4 +222,6 @@ main()
 </body>
 `
 
-fs.writeFileSync("../site/index.html",html)
+fs.ensureDir(r`../site`)
+fs.writeFileSync(r`../site/index.html`, html)
+fs.copyFileSync(r`../screenshots/qiji-seal.svg`, r`../site/seal.svg`)
