@@ -230,8 +230,10 @@ main()
 
 	if (!fs.existsSync(r`../site/qiji.ttf`)) {
 		console.log('Downloading font from release...')
-		const r = await axios.get('https://github.com/LingDong-/qiji-font/releases/latest/download/qiji.ttf')
-		fs.writeFileSync(r`../site/qiji.ttf`, r.body)
+		const res = await axios.get('https://github.com/LingDong-/qiji-font/releases/latest/download/qiji.ttf', {
+			responseType: 'arraybuffer',
+		})
+		fs.writeFileSync(r`../site/qiji.ttf`, res.data)
 	}
 
 	console.log('Build finished')
