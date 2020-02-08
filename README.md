@@ -16,6 +16,9 @@
 
 
 ## [Try it out online!](https://qiji-font.netlify.com/)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/36a05e89-fa5f-4b29-87c9-1d4d8e07eb24/deploy-status)](https://app.netlify.com/sites/qiji-font/deploys)
+
 [![](screenshots/screenshot002.png)](https://qiji-font.netlify.com/)
 
 ## Download
