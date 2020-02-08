@@ -98,8 +98,12 @@ function main(){
 	document.getElementById("btn-render").onclick = update_r;
 
 	document.getElementById("render").addEventListener('wheel', (e)=> {
-		document.getElementById("render").scrollLeft -= e.deltaY;
-		e.preventDefault();
+		//https://stackoverflow.com/questions/10744645/detect-touchpad-vs-mouse-in-javascript
+		var isTouchPad = e.wheelDeltaY ? e.wheelDeltaY === -3 * e.deltaY : e.deltaMode === 0;
+		if (!isTouchPad){
+			document.getElementById("render").scrollLeft -= e.deltaY;
+			e.preventDefault();
+		}
 	})
 }
 
@@ -167,7 +171,7 @@ var html = `
 	.punc-big{
 		display: inline-block;
 		transform: translate(30px,-30px);
-		letter-spacing: -68px;
+		letter-spacing: -67.99px;
 		color:#BB705AEE;
 		overflow: visible;
 		z-index: 2;
@@ -175,14 +179,14 @@ var html = `
 	.punc-medium{
 		display: inline-block;
 		transform: translate(20px,-24px);
-		letter-spacing: -51px;
+		letter-spacing: -50.99px;
 		color:#BB705AEE;
 		z-index: 2;
 	}
 	.punc-small{
 		display: inline-block;
 		transform: translate(12px,-15px);
-		letter-spacing: -30px;
+		letter-spacing: -29.99px;
 		color:#BB705AEE;
 		overflow: visible;
 		z-index: 2;
@@ -198,7 +202,7 @@ var html = `
 </style>
 
 <body>
-<img style="position:absolute; left:20px; top:22px" src="/seal.svg" width="60"/>
+<img style="position:absolute; left:20px; top:22px" src="./seal.svg" width="60"/>
 <div style="position:absolute; left:100px; top:30px; min-width: 620px; width: calc(100% - 130px); height: 120px;  border:1px solid black; font-family:monospace">
 &nbsp;<b>QIJI-FONT(齊伋體) TESTBED</b>
 &nbsp;/&nbsp;TEXT=<select id="sel-txt">${Object.keys(lorem_kv).map(x=>'<option value="'+x+'"">'+x+"</option>")}</select>
