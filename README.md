@@ -20,7 +20,7 @@
 
 ## Download
 
-- True type font: [QIJI.ttf](QIJI.ttf)
+- See [Releases](https://github.com/LingDong-/qiji-font/releases) page.
 
 
 ## Progress
