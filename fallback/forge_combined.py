@@ -6,15 +6,17 @@ from glob import glob
 import os
 import sys
 import json
-
-
 import fontforge
+
+version = json.loads(open("../package.json", "r").read())["version"]
 
 font = fontforge.open("../qiji.ttf")
 font.familyname = "QIJIC"
 font.fontname = "QIJIC"
 font.fullname= "QIJIC"
-font.copyright = "'Copyright (c) 2020, Lingdong Huang"
+font.copyright = "Copyright (c) 2020, Lingdong Huang"
+font.version = version
+
 done = [x.unicode for x in list(font.glyphs())]
 
 for f in glob("../output/fallback_stage/*.svg"):
