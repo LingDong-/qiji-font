@@ -12,7 +12,7 @@
 - Open source;
 - A work in progress;
 - Named in honour of 閔齊伋, 16th century printer;
-- Intended to be used with [wenyan-lang](wy-lang.org), the Classical Chinese programming language.
+- Intended to be used with [wenyan-lang](//wy-lang.org), the Classical Chinese programming language.
 
 
 ## [Try it out online!](https://qiji-font.netlify.com/)
@@ -20,7 +20,7 @@
 
 ## Download
 
-- True type font: [QIJI.ttf](QIJI.ttf)
+- See [Releases](https://github.com/LingDong-/qiji-font/releases) page.
 
 
 ## Progress
@@ -62,7 +62,7 @@
 
 ## Known Issues
 
-- Character sizes are sometimes inconsistant. Undergoing manual tweaking.
+- Character sizes are sometimes inconsistent. Undergoing manual tweaking.
 
 
 ## Development
