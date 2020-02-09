@@ -98,6 +98,22 @@ function main(){
 		var tr = tc.replace(/。/g,`<span class="punc-${ts}">。</span>`).replace(/、/g,`<span class="punc-${ts}">、</span>`)
 		document.getElementById("render").innerHTML = tr;
 	}
+
+	function loader(){
+		var t = new Date().getTime()-window.loadingLoaded;
+
+		var loading = document.getElementById("loading")
+		if (fontready && t > 6000){
+			
+			loading.style.opacity=parseFloat(loading.style.opacity)*0.95
+		}
+		if (loading.style.opacity <= 0.01){
+			document.body.removeChild(loading);
+			return;
+		}
+		setTimeout(loader,1)
+	}
+	loader();
 	
 	document.getElementById("sel-txt").value = Object.keys(lorem)[3]
 	document.getElementById("sel-fs").value = "small"
@@ -205,7 +221,7 @@ var html = `
 		z-index: 2;
 	}
 	#render{
-		background: ANTIQUEWHITE;
+		background: antiquewhite;
 		box-shadow:
         inset 0px 11px 8px -10px rgba(0,0,0,0.1),
         inset 0px -11px 8px -10px rgba(0,0,0,0.1);
@@ -216,6 +232,12 @@ var html = `
 
 <body>
 <img style="position:absolute; left:20px; top:22px" src="./seal.svg" width="60"/>
+<div id="loading" style="position:absolute; left:0px; top:0px; width: 100%; height: 100%; background:rgba(255,255,255,0.95); z-index:2000; opacity: 1;">
+	<div style="position:absolute; left:calc(50% - 50px); top:calc(50% - 80px);">
+		<img style="border: 1px solid black;" src="./loading.gif" onload="window.loadingLoaded=new Date().getTime();"/>
+		<div style="font-family:monospace">Loading...</div>
+	</div>
+</div>
 <div style="position:absolute; left:100px; top:30px; min-width: 620px; width: calc(100% - 130px); height: 120px;  border:1px solid black; font-family:monospace">
 &nbsp;<b>QIJI-FONT(齊伋體) TESTBED</b>
 &nbsp;/&nbsp;TEXT=<select id="sel-txt">${Object.keys(lorem_kv).map(x=>'<option value="'+x+'"">'+x+"</option>")}</select>
@@ -226,7 +248,6 @@ var html = `
 </textarea>
 </div>
 <div id="render" style="position:absolute; top: 180px; left: 0px; width: calc(100% - 50px); height: 665px; padding: 25px;">
-字體加載中
 </div>
 <div style="position:absolute;top:910px; right:30px; font-family: monospace">
 Open source font by Lingdong Huang 2020, <a href="https://github.com/LingDong-/qiji-font">Download on GitHub</a>.
@@ -244,6 +265,7 @@ main()
 	fs.ensureDir(r`../site`)
 	fs.writeFileSync(r`../site/index.html`, html)
 	fs.copyFileSync(r`../screenshots/qiji-seal.svg`, r`../site/seal.svg`)
+	fs.copyFileSync(r`../screenshots/loading.gif`, r`../site/loading.gif`)
 
 	await downloadFont('qiji.ttf')
 	await downloadFont('qiji.woff2')
