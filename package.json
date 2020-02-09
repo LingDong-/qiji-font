@@ -42,6 +42,7 @@
     "release-it": "^12.4.3"
   },
   "dependencies": {
+    "canvas": "^2.6.1",
     "ttf2woff2": "^3.0.0"
   }
 }
