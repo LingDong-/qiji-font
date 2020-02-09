@@ -3,8 +3,8 @@ const path = require('path')
 const axios = require('axios')
 
 // resolve relative path, usage r`../data`
-function r([filepath]) {
-	return path.resolve(__dirname, filepath)
+function r(strings, ...args) {
+	return path.resolve(__dirname, strings.reduce((result, s, i) => result + s + (args[i] ? args[i] : ''), ''))
 }
 
 var lorem = fs.readFileSync(r`../data/lorem.txt`).toString().split(/\n\n|\s\n\s\n/g)
@@ -23,6 +23,19 @@ var charsmp = Object.entries(JSON.parse(fs.readFileSync(r`../data/TC2SC.json`).t
 charset = Array.from(new Set(charset.concat(charsmp)))
 
 charset.push("。","、")
+
+async function downloadFont(filename) {
+	if (!fs.existsSync(r`../site/${filename}`)) {
+		console.log(`Downloading font ${filename} from release...`)
+		const res = await axios.get(`https://github.com/LingDong-/qiji-font/releases/latest/download/${filename}`, {
+			responseType: 'arraybuffer',
+		})
+		fs.writeFileSync(r`../site/${filename}`, res.data)
+	}
+	else {
+		console.log(`Font ${filename} already exists, skipped.`)
+	}
+}
 
 function main(){
 	let fontready = false
@@ -118,7 +131,7 @@ var html = `
 	@font-face {
 		font-family: QIJI;
 		font-display: swap;
-	  src: url("qiji.ttf") format('truetype');
+	  src: url('qiji.woff2') format('woff2'), url('qiji.ttf') format('truetype');
 	}
 	.text-huge{
 		color: rgba(0,0,0,0.8);
@@ -232,13 +245,8 @@ main()
 	fs.writeFileSync(r`../site/index.html`, html)
 	fs.copyFileSync(r`../screenshots/qiji-seal.svg`, r`../site/seal.svg`)
 
-	if (!fs.existsSync(r`../site/qiji.ttf`)) {
-		console.log('Downloading font from release...')
-		const res = await axios.get('https://github.com/LingDong-/qiji-font/releases/latest/download/qiji.ttf', {
-			responseType: 'arraybuffer',
-		})
-		fs.writeFileSync(r`../site/qiji.ttf`, res.data)
-	}
+	await downloadFont('qiji.ttf')
+	await downloadFont('qiji.woff2')
 
 	console.log('Build finished')
 })()
