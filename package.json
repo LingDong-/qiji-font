@@ -5,7 +5,7 @@
   "description": "齊伋體 Qiji font",
   "scripts": {
     "build": "echo TODO!",
-    "build:site": "node ./workflow/make_site.js",
+    "build:site": "cd workflow; node make_site.js",
     "release": "release-it"
   },
   "repository": {
