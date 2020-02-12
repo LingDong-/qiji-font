@@ -10,7 +10,7 @@ import fontforge
 
 version = json.loads(open("../package.json", "r").read())["version"]
 
-font = fontforge.open("../qiji.ttf")
+font = fontforge.open("../dist/qiji.ttf")
 font.familyname = "QIJIC"
 font.fontname = "QIJIC"
 font.fullname= "QIJIC"
@@ -18,6 +18,11 @@ font.copyright = "Copyright (c) 2020, Lingdong Huang"
 font.version = version
 
 done = [x.unicode for x in list(font.glyphs())]
+for x in list(font.glyphs()):
+	if x.altuni:
+		done += [y[0] for y in x.altuni]
+done = list(set(done))
+
 
 for f in glob("../output/fallback_stage/*.svg"):
     char = f.split("/")[-1].split(".")[0]
@@ -34,7 +39,7 @@ for f in glob("../output/fallback_stage/*.svg"):
 
 print(len(list(font.glyphs())))
 
-font.generate("../qiji-combo.ttf")
+font.generate("../dist/qiji-combo.ttf")
 
 
 

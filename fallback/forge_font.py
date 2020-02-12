@@ -24,6 +24,7 @@ for f in glob("../output/fallback_stage/*.svg"):
     glyph = font.createChar(hx)
     glyph.importOutlines(f)
     glyph.width=800
+    glyph.simplify()
 
 print(len(list(font.glyphs())))
 

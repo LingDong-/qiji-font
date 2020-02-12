@@ -192,7 +192,7 @@ var html = `
 	.punc-huge{
 		display: inline-block;
 		transform: translate(100px,-100px);
-		letter-spacing: -272px;
+		letter-spacing: -212px;
 		color:#BB705AEE;
 		overflow: visible;
 		z-index: 2;

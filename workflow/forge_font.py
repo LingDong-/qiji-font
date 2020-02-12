@@ -58,17 +58,22 @@ for pth in care:
         exit()
         continue
     glyph.width=800
+    # glyph.simplify()
 
-    for o in other:
-        if o not in list(care.values()):
-            hx = ord(o)
-            glyph = font.createChar(hx)
-            glyph.importOutlines(f)
-            glyph.width=800
-            print(o,"copied")
-        else:
-            pass
-            print(o,"has own glyph")
+    other = other - set(care.values())
+    if len(other) > 0:
+        glyph.altuni = [ ord(o) for o in other ]
+
+    # for o in other:
+    #     if o not in list(care.values()):
+    #         hx = ord(o)
+    #         glyph = font.createChar(hx)
+    #         glyph.importOutlines(f)
+    #         glyph.width=800
+    #         print(o,"copied")
+    #     else:
+    #         pass
+    #         print(o,"has own glyph")
 
 glyph = font.createChar(0x3001)
 glyph.importOutlines("../output/singles/、f.svg")
