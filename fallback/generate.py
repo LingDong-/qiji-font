@@ -6,7 +6,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 def make_char(ch):
 
-	font = ImageFont.truetype("../tmp/SourceHanSerifTC-SemiBold.otf",300)
+	font = ImageFont.truetype("../tmp/SourceHanSerifK-SemiBold.otf",300)
 	im = Image.new("L",(512,512))
 	dr = ImageDraw.Draw(im)
 	dr.text((110,42),ch,200,font=font)
