@@ -28,6 +28,9 @@ for k,v in carekv:
 
 
 care = [x.split("\t")[0].split("/")[-1].split(".")[0] for x in open("../data/labels_all.txt",'r').read().split("\n") if len(x)]
+done = [x.split("/")[-1].split(".")[0] for x in glob("../output/fine/*.bmp")]
+care = [x for x in care if x not in done]
+
 manshft = [x.split("\t") for x in open("../data/manual_shift.txt").read().split("\n")]
 # care = [x for x in care if x in [y[0] for y in manshft]]
 # care = [x for x in care if x in [y[0] for y in bigk]]
@@ -273,14 +276,14 @@ for f in files:
         
         fnl = ((1-trrd*(1-crpd.astype(np.float32)/255))*255).astype(np.uint8)
 
-        cv2.imshow('',c3);cv2.waitKey(0)
-        cv2.imshow('',c0);cv2.waitKey(0)
-        cv2.imshow('',c);cv2.waitKey(0)
-        cv2.imshow('',tr);cv2.waitKey(0)
-        cv2.imshow('',trr);cv2.waitKey(0)
-        cv2.imshow('',trrd);cv2.waitKey(0)
-        cv2.imshow('',crp);cv2.waitKey(0)
-        cv2.imshow('',crpd);cv2.waitKey(0)
-        cv2.imshow('',(1-trrd)+0.5*(1-fnl.astype(np.float32)/255));cv2.waitKey(0)
-        cv2.imshow('',fnl);cv2.waitKey(0)
-        # cv2.imwrite("../output/fine/"+bname+".bmp",fnl)
+        # cv2.imshow('',c3);cv2.waitKey(0)
+        # cv2.imshow('',c0);cv2.waitKey(0)
+        # cv2.imshow('',c);cv2.waitKey(0)
+        # cv2.imshow('',tr);cv2.waitKey(0)
+        # cv2.imshow('',trr);cv2.waitKey(0)
+        # cv2.imshow('',trrd);cv2.waitKey(0)
+        # cv2.imshow('',crp);cv2.waitKey(0)
+        # cv2.imshow('',crpd);cv2.waitKey(0)
+        # cv2.imshow('',(1-trrd)+0.5*(1-fnl.astype(np.float32)/255));cv2.waitKey(0)
+        # cv2.imshow('',fnl);cv2.waitKey(0)
+        cv2.imwrite("../output/fine/"+bname+".bmp",fnl)

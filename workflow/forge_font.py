@@ -81,11 +81,15 @@ glyph.width=800
 glyph = font.createChar(0x3002)
 glyph.importOutlines("../output/singles/。f.svg")
 glyph.width=800
+glyph = font.createChar(0x3000)
+glyph.width=800
+glyph = font.createChar(0x20)
+glyph.width=800
 
 print(len(list(font.glyphs())))
 
 font.generate("../dist/qiji.ttf")
 
 
-
+祗襍雜朿束紙
 

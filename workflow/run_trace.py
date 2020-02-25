@@ -21,6 +21,8 @@ os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../outpu
 os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-9*.bmp")
 os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H*.bmp")
 
+# os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H13-255_3941_238_197.bmp")
+
 
 import stage_svg
 
