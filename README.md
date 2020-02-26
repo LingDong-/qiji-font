@@ -14,7 +14,7 @@
 - Named in honour of 閔齊伋, 16th century printer;
 - Intended to be used with [wenyan-lang](//wy-lang.org), the Classical Chinese programming language.
 
-📢 聲明：敝字體近日頗見流傳於網絡，然皆誤以“‘凌’东齐伋体”為名。鄙人名**令東**，字體名**齊伋**；強欲冠後以前者，亦以“**令東齊伋體**”為宜，望周知。🤦‍♂️
+📢 聲明：敝字體近日頗見流傳於網絡，然皆訛作“‘凌’东齐伋体”。鄙人名**令東**，字體名**齊伋**；強欲冠後以前者，亦以“**令東齊伋體**”為宜，望周知。🤦‍♂️
 
 
 ## [Try it out online!](https://qiji-font.netlify.com/)
