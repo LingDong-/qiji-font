@@ -38,7 +38,7 @@
 
 ## Workflow
 
-**Step I:** Download high resolution PDFs (from [shuge.org](shuge.org)) and split pages into images.
+**Step I:** Download high resolution PDFs (from [shuge.org](https://www.shuge.org)) and split pages into images.
 
 **Step II:** Manually lay a grid on top of each page to generate bounding boxes for characters (potentially replacable by an automatic corner-detection algorithm).
 
