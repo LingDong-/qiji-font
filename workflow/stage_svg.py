@@ -8,7 +8,10 @@ n = 0
 t = 0
 for f in glob("../output/fine/*.svg"):
 	bname = f.split("/")[-1]
-	t += tweak[bname]['scale']
+	try:
+		t += tweak[bname]['scale']
+	except:
+		t += 1
 	n+=1
 
 avgsc = int((1/(t/n))*10000)/10000
@@ -16,8 +19,10 @@ avgsc = int((1/(t/n))*10000)/10000
 
 for f in glob("../output/fine/*.svg"):
 	bname = f.split("/")[-1]
-	t = tweak[bname]
-
+	try:
+		t = tweak[bname]
+	except:
+		t = {'x':0,'y':0,'scale':1,'rotate':0}
 	gstr = f'<g transform="translate(256,256) translate({t["x"]},{t["y"]}) scale({t["scale"]*avgsc}) rotate({t["rotate"]}) translate(-256,-256)">'
 
 	s = open(f,'r').read()

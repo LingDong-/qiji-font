@@ -90,6 +90,3 @@ print(len(list(font.glyphs())))
 
 font.generate("../dist/qiji.ttf")
 
-
-祗襍雜朿束紙
-
