@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# fontforge -lang=py -script forge_font.py
 
 # generate a TTF font using fontforge
 

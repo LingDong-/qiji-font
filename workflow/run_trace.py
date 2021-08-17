@@ -19,10 +19,12 @@ import os
 # os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-7*.bmp")
 # os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-8*.bmp")
 # os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-9*.bmp")
-os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H*.bmp")
+# os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H*.bmp")
 
 # os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H13-255_3941_238_197.bmp")
 
+
+os.system("/Users/admin/Downloads/potrace-1.16.mac-x86_64/potrace --svg ../output/fine/-H105-4312_4236_244_201.bmp")
 
 import stage_svg
 
