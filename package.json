@@ -39,7 +39,7 @@
   "devDependencies": {
     "axios": "^0.19.2",
     "fs-extra": "^8.1.0",
-    "release-it": "^12.4.3"
+    "release-it": "^15.6.0"
   },
   "dependencies": {
     "canvas": "^2.6.1",
